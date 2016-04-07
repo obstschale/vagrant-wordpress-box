@@ -1,3 +1,5 @@
+> #This is a new Vagrant WordPress Box but it is still in early progress. The box is based on Scotch Box and so this is still the original README file
+
 Scotch Box
 ==========
 
