@@ -30,11 +30,11 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     cd /var/www/${DOMAIN[0]} && composer install
 
     # Create local-config.php for Site
-    DBNAME=$( echo ${DOMAIN[0]} | sed -e 's/[\.;:?!- ]/_/g')
+    DBNAME=$( echo ${DOMAIN[0]} | sed -e 's/[^a-zA-Z0-9]/_/g')
     sudo cp /var/www/${DOMAIN[0]}/local-config-sample.php /var/www/${DOMAIN[0]}/local-config.php
     sudo sed -i s,database,${DBNAME},g /var/www/${DOMAIN[0]}/local-config.php
     sudo sed -i s,user,root,g /var/www/${DOMAIN[0]}/local-config.php
-    sudo sed -i s,password.local,root,g /var/www/${DOMAIN[0]}/local-config.php
+    sudo sed -i s,password,root,g /var/www/${DOMAIN[0]}/local-config.php
 
     echo "Creating vhost config for ${DOMAIN[0]}..."
     sudo cp /etc/apache2/sites-available/scotchbox.local.conf /etc/apache2/sites-available/${DOMAIN[0]}.conf
