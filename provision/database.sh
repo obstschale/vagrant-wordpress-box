@@ -9,7 +9,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     set -- "$DOMAIN" 
     IFS=" | "; declare -a DOMAIN=($*)
 
-    DBNAME=$( echo ${DOMAIN[0]} | sed -e 's/[\.;:?! ]/_/g')
+    DBNAME=$( echo ${DOMAIN[0]} | sed -e 's/[\.;:?!- ]/_/g')
     echo "Create DB if does not exist already: $DBNAME"
     sudo mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS $DBNAME;"
 done < "$filename"
