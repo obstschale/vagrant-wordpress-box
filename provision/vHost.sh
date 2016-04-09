@@ -26,7 +26,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     git init /var/www/${DOMAIN[0]}
 
     # Install Composer Dependencies
-    sudo composer self-update
+    composer self-update
     cd /var/www/${DOMAIN[0]} && composer install
 
     # Create local-config.php for Site
