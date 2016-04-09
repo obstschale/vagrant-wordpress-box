@@ -29,37 +29,37 @@ Vagrant.configure("2") do |config|
     # individual domains separated by whitespace in subdirectories of www/.
     if defined? VagrantPlugins::HostsUpdater
 
-        # Capture the paths to all vvv-hosts files under the www/ directory.
-        paths = []
-        Dir.glob(vagrant_dir + '/config/hosts.list').each do |path|
-            paths << path
-        end
-
-        # Parse through the vvv-hosts files in each of the found paths and put the hosts
-        # that are found into a single array.
-        hosts = []
-        paths.each do |path|
-            new_hosts = []
-            file_hosts = IO.read(path).split( "\n" )
-            file_hosts.each do |line|
-                if line[0..0] != "#"
-                    sameHosts = line.gsub( ' ', '' ).split( "|" )
-                    if sameHosts.length > 1
-                        sameHosts.each do |shost|
-                            new_hosts << shost
-                        end
-                    else
-                        new_hosts << line
-                    end
-                end
-            end
-            hosts.concat new_hosts
-        end
-
-        # Pass the final hosts array to the hostsupdate plugin so it can perform magic.
-        config.hostsupdater.aliases = hosts
-
+    # Capture the paths to all vvv-hosts files under the www/ directory.
+    paths = []
+    Dir.glob(vagrant_dir + '/config/hosts.list').each do |path|
+      paths << path
     end
+
+    # Parse through the vvv-hosts files in each of the found paths and put the hosts
+    # that are found into a single array.
+    hosts = []
+    paths.each do |path|
+      new_hosts = []
+      file_hosts = IO.read(path).split( "\n" )
+      file_hosts.each do |line|
+        if line[0..0] != "#"
+          sameHosts = line.gsub( ' ', '' ).split( "|" )
+          if sameHosts.length > 1
+            sameHosts.each do |shost|
+              new_hosts << shost
+            end
+          else
+            new_hosts << line
+          end
+        end
+      end
+      hosts.concat new_hosts
+    end
+
+    # Pass the final hosts array to the hostsupdate plugin so it can perform magic.
+    config.hostsupdater.aliases = hosts
+
+  end
 
     # set synced_folder
     config.vm.synced_folder "provision/", "/srv/provision"
